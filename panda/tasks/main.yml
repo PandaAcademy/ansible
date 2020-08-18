@@ -1,0 +1,28 @@
+---
+- name: Install java
+  apt:
+    name: default-jre
+    update_cache: yes
+  become: true
+
+- name: Copy application
+  copy:
+    src: "{{ artifact_name }}"
+    dest: /home/ubuntu
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
+
+- name: Create a service definition file from template
+  template:
+    src: application.service
+    dest:  /etc/systemd/system/
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
+
+- name: Start application
+  service:
+    name: application
+    state: restarted
+  become: true
