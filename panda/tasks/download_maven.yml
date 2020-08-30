@@ -7,3 +7,4 @@
     username: "{{ username }}"
     password: "{{ password }}"
     dest: "{{ artifact_name }}"
+  connection: local

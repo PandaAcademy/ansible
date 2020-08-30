@@ -1,4 +1,6 @@
 ---
+- include_tasks: download_maven.yml
+
 - name: Install java
   apt:
     name: default-jre
@@ -13,13 +15,14 @@
     group: ubuntu
     mode: '0644'
 
-- name: Create a service definition file from template
-  template:
+- name: Create a service definition file
+  copy:
     src: application.service
     dest:  /etc/systemd/system/
     owner: ubuntu
     group: ubuntu
     mode: '0644'
+  become: yes
 
 - name: Start application
   service:
